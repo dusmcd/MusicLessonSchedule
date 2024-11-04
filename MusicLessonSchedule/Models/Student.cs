@@ -7,7 +7,7 @@ namespace MusicLessonSchedule.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required, DisplayName("Student Name")]
         public string? Name { get; set; }
         [Required, DisplayName("Phone Number")]
         public string? Phone { get; set; }

@@ -7,13 +7,13 @@ namespace MusicLessonSchedule.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required, DisplayName("Teacher Name")]
         public string? Name { get; set; }
         [Required, DisplayName("Phone Number")]
         public string? PhoneNumber { get; set; }
         [Required]
         public string? Email { get; set; }
         [Required, DisplayName("Date of Birth"), DataType(DataType.Date)]
-        public string? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }
