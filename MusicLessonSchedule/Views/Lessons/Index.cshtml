@@ -14,10 +14,10 @@
                 @Html.DisplayNameFor(model => model.LessonTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student.Name)
+                @Html.DisplayNameFor(model => model.Student!.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Teacher.Name)
+                @Html.DisplayNameFor(model => model.Teacher!.Name)
             </th>
         </tr>
     </thead>
@@ -27,8 +27,8 @@
            <tr>
                <td>@Html.DisplayFor(modelItem => lesson.LessonDay)</td>
                <td>@Html.DisplayFor(modelItem => lesson.LessonTime)</td>
-               <td>@Html.DisplayFor(modelItem => lesson.Student.Name)</td>
-               <td>@Html.DisplayFor(modelItem => lesson.Teacher.Name)</td>
+               <td>@Html.DisplayFor(modelItem => lesson.Student!.Name)</td>
+               <td>@Html.DisplayFor(modelItem => lesson.Teacher!.Name)</td>
            </tr>
         }
     </tbody>

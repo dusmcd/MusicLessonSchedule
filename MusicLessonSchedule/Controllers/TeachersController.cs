@@ -22,7 +22,11 @@ namespace MusicLessonSchedule.Controllers
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Teacher.ToListAsync());
+            var query = from t in _context.Teacher
+                        join ti in _context.TeacherInstrument on t.Id equals ti.TeacherId
+                        join i in _context.Instrument on ti.InstrumentId equals i.Id
+                        select new TeacherViewModel { Teacher = t, InstrumentId = ti.InstrumentId, InstrumentName = i.Name };
+            return View(await query.ToListAsync());
         }
 
         // GET: Teachers/Details/5
@@ -44,9 +48,14 @@ namespace MusicLessonSchedule.Controllers
         }
 
         // GET: Teachers/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var instruments = await _context.Instrument.ToListAsync();
+            TeacherViewModel teacherVM = new TeacherViewModel
+            {
+                Instruments = instruments
+            };
+            return View(teacherVM);
         }
 
         // POST: Teachers/Create
@@ -54,15 +63,30 @@ namespace MusicLessonSchedule.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PhoneNumber,Email,DateOfBirth")] Teacher teacher)
+        public async Task<IActionResult> Create(TeacherViewModel teacherVM)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(teacher);
+                Teacher teacher = new Teacher
+                {
+                    Name = teacherVM.Teacher!.Name,
+                    DateOfBirth = teacherVM.Teacher!.DateOfBirth,
+                    PhoneNumber = teacherVM.Teacher!.PhoneNumber,
+                    Email = teacherVM.Teacher!.Email
+                };
+                _context.Teacher.Add(teacher);
                 await _context.SaveChangesAsync();
+                int id = teacher.Id;
+                TeacherInstrument teacherInstrument = new TeacherInstrument
+                {
+                    InstrumentId = teacherVM.InstrumentId,
+                    TeacherId = id
+                };
+                _context.TeacherInstrument.Add(teacherInstrument);
+                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(teacher);
+            return View(teacherVM);
         }
 
         // GET: Teachers/Edit/5

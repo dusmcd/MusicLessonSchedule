@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MusicLessonSchedule.Models.Teacher>
+﻿@model IEnumerable<MusicLessonSchedule.Models.TeacherViewModel>
 
 @{
     ViewData["Title"] = "Teachers";
@@ -13,39 +13,42 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Teacher!.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                @Html.DisplayNameFor(model => model.Teacher!.PhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Teacher!.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                @Html.DisplayNameFor(model => model.Teacher!.DateOfBirth)
             </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(Model => Model.InstrumentName)</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Teacher!.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                @Html.DisplayFor(modelItem => item.Teacher!.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Teacher!.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                @Html.DisplayFor(modelItem => item.Teacher!.DateOfBirth)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.InstrumentName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Teacher!.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Teacher!.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Teacher!.Id">Delete</a>
             </td>
         </tr>
 }

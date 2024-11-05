@@ -1,8 +1,18 @@
-﻿namespace MusicLessonSchedule.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace MusicLessonSchedule.Models
 {
     public class TeacherViewModel
     {
-        public Teacher Teacher { get; set; }
-        public string InstrumentName {  get; set; }
+        [Required]
+        public Teacher? Teacher { get; set; }
+
+        [Required, DisplayName("Instrument")]
+        public int InstrumentId { get; set; }
+
+        public string? InstrumentName { get; set; }
+
+        public List<Instrument>? Instruments { get; set; }
     }
 }
