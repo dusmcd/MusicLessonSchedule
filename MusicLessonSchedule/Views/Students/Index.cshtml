@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MusicLessonSchedule.Models.Student>
+﻿@model IEnumerable<MusicLessonSchedule.Models.StudentViewModel>
 @{
     ViewData["Title"] = "Students";
 }
@@ -9,22 +9,24 @@
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m => m.Name)</th>
-            <th>@Html.DisplayNameFor(m => m.Phone)</th>
-            <th>@Html.DisplayNameFor(m => m.Age)</th>
-            <th>@Html.DisplayNameFor(m => m.Email)</th>
+            <th>@Html.DisplayNameFor(m => m.Student!.Name)</th>
+            <th>@Html.DisplayNameFor(m => m.Student!.Phone)</th>
+            <th>@Html.DisplayNameFor(m => m.Student!.Age)</th>
+            <th>@Html.DisplayNameFor(m => m.Student!.Email)</th>
+            <th>@Html.DisplayNameFor(m => m.InstrumentId)</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(m => item.Name)</td>
-                <td>@Html.DisplayFor(m => item.Phone)</td>
-                <td>@Html.DisplayFor(m => item.Age)</td>
-                <td>@Html.DisplayFor(m => item.Email)</td>
+                <td>@Html.DisplayFor(m => item.Student!.Name)</td>
+                <td>@Html.DisplayFor(m => item.Student!.Phone)</td>
+                <td>@Html.DisplayFor(m => item.Student!.Age)</td>
+                <td>@Html.DisplayFor(m => item.Student!.Email)</td>
+                <td>@Html.DisplayFor(m => item.InstrumentName)</td>
                 <td>
-                    <a asp-route-id="@item.Id" asp-action="Edit">Edit</a>
+                    <a asp-route-id="@item.Student!.Id" asp-action="Edit">Edit</a>
                 </td>
             </tr>
         }

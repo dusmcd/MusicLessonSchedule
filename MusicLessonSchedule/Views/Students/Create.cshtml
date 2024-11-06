@@ -1,4 +1,4 @@
-﻿@model MusicLessonSchedule.Models.Student
+﻿@model MusicLessonSchedule.Models.StudentViewModel
 
 @{
     ViewData["Title"] = "Add Student";
@@ -13,24 +13,34 @@
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Student!.Name" class="control-label"></label>
+                <input asp-for="Student!.Name" class="form-control" />
+                <span asp-validation-for="Student!.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <label asp-for="Student!.Phone" class="control-label"></label>
+                <input asp-for="Student!.Phone" class="form-control" />
+                <span asp-validation-for="Student!.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Student!.Email" class="control-label"></label>
+                <input asp-for="Student!.Email" class="form-control" />
+                <span asp-validation-for="Student!.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
+                <label asp-for="Student!.Age" class="control-label"></label>
+                <input asp-for="Student!.Age" class="form-control" />
+                <span asp-validation-for="Student!.Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstrumentId" class="control-label"></label>
+                <select asp-for="InstrumentId" class="form-select">
+                    @foreach (var instrument in Model.Instruments!)
+                    {
+                        <option value="@instrument.Id">@instrument.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="InstrumentId" class="test-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

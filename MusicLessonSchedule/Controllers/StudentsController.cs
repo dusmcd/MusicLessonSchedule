@@ -17,29 +17,54 @@ namespace MusicLessonSchedule.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var students = await _context.Student.ToListAsync();
+            var query = from s in _context.Student
+                        join si in _context.StudentInstrument on s.Id equals si.StudentId
+                        join i in _context.Instrument on si.InstrumentId equals i.Id
+                        select new StudentViewModel { Student = s, InstrumentName = i.Name, InstrumentId = i.Id };
+            var students = await query.ToListAsync();
             return View(students);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View(); 
+
+            var instruments = await _context.Instrument.ToListAsync();
+            var studentVM = new StudentViewModel
+            {
+                Instruments = instruments
+            };
+            return View(studentVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id", "Name", "Phone", "Email", "Age")] Student student)
+        public async Task<IActionResult> Create(StudentViewModel studentVM)
         {
             if (ModelState.IsValid)
             {
+                var student = new Student
+                {
+                    Name = studentVM.Student!.Name,
+                    Phone = studentVM.Student!.Phone,
+                    Email = studentVM.Student!.Email,
+                    Age = studentVM.Student!.Age,
+                };
                 _context.Student.Add(student);
+                await _context.SaveChangesAsync();
+                int id = student.Id;
+                var instrumentStudent = new StudentInstrument
+                {
+                    StudentId = id,
+                    InstrumentId = studentVM.InstrumentId
+                };
+                _context.Add(instrumentStudent);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
             else
             {
                 return Problem("There was a problem");
             }
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Edit(int? id)
